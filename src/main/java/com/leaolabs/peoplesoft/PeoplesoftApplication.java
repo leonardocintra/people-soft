@@ -13,7 +13,7 @@ public class PeoplesoftApplication {
 	@RequestMapping("/")
 	@ResponseBody
 	String home() {
-		return "Bem vindo! (Welcome!!)";
+		return "Bem vindo! (Welcome!)";
 	}
 
 	@RequestMapping("/health")
