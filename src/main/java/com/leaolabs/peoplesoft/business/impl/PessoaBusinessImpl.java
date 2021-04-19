@@ -1,13 +1,11 @@
 package com.leaolabs.peoplesoft.business.impl;
 
 import com.leaolabs.peoplesoft.business.PessoaBusiness;
+import com.leaolabs.peoplesoft.commons.exception.EntityAlreadyExistsException;
 import com.leaolabs.peoplesoft.model.Pessoa;
 import com.leaolabs.peoplesoft.repository.PessoaRepository;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
-
-import javax.persistence.EntityExistsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,10 @@ public class PessoaBusinessImpl implements PessoaBusiness {
 
   @Override
   public Optional<Pessoa> create(Pessoa pessoa) {
-    //TODO: precisa verificar se CPF ja existe
+    this.pessoaRepository.findByCpf(pessoa.getCpf()).ifPresent(p -> {
+      throw new EntityAlreadyExistsException("CPF");
+    });
+
     return Optional.of(this.pessoaRepository.save(pessoa));
   }
 }

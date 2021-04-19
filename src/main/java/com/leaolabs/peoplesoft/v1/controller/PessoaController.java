@@ -9,6 +9,7 @@ import com.leaolabs.peoplesoft.v1.dtos.PessoaDto;
 import com.leaolabs.peoplesoft.v1.mapper.PessoaMapper;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -51,6 +52,7 @@ public class PessoaController extends BaseController {
   public ResponseEntity<ResponseMeta> post(@RequestBody @Valid final PessoaDto pessoaDto) {
     var pessoa = this.pessoaBusiness.create(this.pessoaMapper.deserialize(pessoaDto))
         .orElseThrow(() -> new EntityNotFoundException("Pessoa"));
+
     return super.buildResponse(HttpStatus.CREATED, Optional.of(this.pessoaMapper.serialize(pessoa)));
   }
 }
