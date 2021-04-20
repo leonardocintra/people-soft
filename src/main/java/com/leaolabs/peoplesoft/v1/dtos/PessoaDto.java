@@ -30,6 +30,8 @@ public class PessoaDto implements Serializable {
   @Size(max = 11)
   private String cpf;
 
+  private String sexo;
+
   @NotBlank
   private ZonedDateTime dataCriacao;
 

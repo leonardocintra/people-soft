@@ -1,5 +1,6 @@
 package com.leaolabs.peoplesoft.v1.mapper;
 
+import com.leaolabs.peoplesoft.enums.Sexo;
 import com.leaolabs.peoplesoft.model.Pessoa;
 import com.leaolabs.peoplesoft.v1.dtos.PessoaDto;
 
@@ -22,6 +23,7 @@ public class PessoaMapper {
         .uuid(pessoa.getUuid())
         .nome(pessoa.getNome())
         .cpf(pessoa.getCpf())
+        .sexo(pessoa.getSexo().getValor())
         .dataCriacao(pessoa.getDataCriacao()).dataAtualizacao(pessoa.getDataAtualizacao()).build();
   }
 
@@ -35,11 +37,17 @@ public class PessoaMapper {
       return new Pessoa();
     }
 
+    // Por padrao o sexo será Masculino
+    if(Optional.ofNullable(dto.getSexo()).isEmpty()) {
+      dto.setSexo("M");
+    }
+
     return Pessoa.builder()
         .id(dto.getId())
         .uuid(dto.getUuid())
         .nome(dto.getNome())
         .cpf(dto.getCpf())
+        .sexo(dto.getSexo().equals("M") ? Sexo.MASCULINO : Sexo.FEMININO)
         .dataCriacao(dto.getDataCriacao()).dataAtualizacao(dto.getDataAtualizacao()).build();
   }
 
