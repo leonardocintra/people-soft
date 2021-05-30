@@ -1,11 +1,24 @@
-version: '3.3'
+version: '3.5'
+
 services:
-  db:
-    image: mysql:8.0
+  postgres:
+    container_name: people_container
+    image: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: people
-      MYSQL_DATABASE: people
-      MYSQL_USER: people
-      MYSQL_PASSWORD: people
+      POSTGRES_USER: people
+      POSTGRES_PASSWORD: people
+      PGDATA: /data/people
+    volumes:
+      - postgres:/data/people
     ports:
-      - "3306:3306"
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
