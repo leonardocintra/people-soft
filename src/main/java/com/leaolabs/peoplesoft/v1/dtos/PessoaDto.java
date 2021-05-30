@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -20,7 +22,6 @@ public class PessoaDto implements Serializable {
 
   private Long id;
 
-  @NotBlank
   private UUID uuid;
 
   @NotBlank
@@ -34,11 +35,14 @@ public class PessoaDto implements Serializable {
   @Size(max = 1)
   private String sexo;
 
+  @Email
+  @NotBlank
+  private String email;
+
+  @Valid
   private List<EnderecoDto> enderecos;
 
-  @NotBlank
   private ZonedDateTime dataCriacao;
 
-  @NotBlank
   private ZonedDateTime dataAtualizacao;
 }

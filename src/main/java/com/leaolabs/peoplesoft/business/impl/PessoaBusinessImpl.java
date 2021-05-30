@@ -7,6 +7,7 @@ import com.leaolabs.peoplesoft.model.Pessoa;
 import com.leaolabs.peoplesoft.repository.PessoaRepository;
 import com.leaolabs.peoplesoft.v1.mapper.EnderecoMapper;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class PessoaBusinessImpl implements PessoaBusiness {
   public Optional<Pessoa> create(Pessoa pessoa) {
     this.pessoaRepository.findByCpf(pessoa.getCpf()).ifPresent(p -> {
       throw new EntityAlreadyExistsException("CPF");
+    });
+
+    pessoa.setEmail(pessoa.getEmail().toLowerCase(Locale.ROOT));
+    this.pessoaRepository.findByEmail(pessoa.getEmail()).ifPresent(e -> {
+      throw new EntityAlreadyExistsException("Email");
     });
 
     var optionalPessoa = Optional.of(this.pessoaRepository.save(pessoa));

@@ -19,7 +19,6 @@ public class EnderecoDto implements Serializable {
 
   private Long id;
 
-  @NotBlank
   private UUID uuid;
 
   @NotBlank
@@ -42,7 +41,7 @@ public class EnderecoDto implements Serializable {
   private String uf;
 
   @NotBlank
-  @Size(max = 8)
+  @Size(max = 8, min = 8)
   private String cep;
 
   @Size(max = 100)
@@ -51,9 +50,7 @@ public class EnderecoDto implements Serializable {
   @Size(max = 300)
   private String referencia;
 
-  @NotBlank
   private ZonedDateTime dataCriacao;
 
-  @NotBlank
   private ZonedDateTime dataAtualizacao;
 }

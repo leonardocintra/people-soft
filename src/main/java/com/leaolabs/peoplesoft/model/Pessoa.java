@@ -50,6 +50,8 @@ public class Pessoa {
 
   private Sexo sexo;
 
+  private String email;
+
   @Column(name = "estado_civil")
   private EstadoCivil estadoCivil;
 

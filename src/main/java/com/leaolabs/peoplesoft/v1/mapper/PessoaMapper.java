@@ -31,6 +31,7 @@ public class PessoaMapper {
         .uuid(pessoa.getUuid())
         .nome(pessoa.getNome())
         .cpf(pessoa.getCpf())
+        .email(pessoa.getEmail())
         .sexo(pessoa.getSexo().getValor())
         .enderecos(enderecoMapper.serialize(pessoa.getEnderecos()))
         .dataCriacao(pessoa.getDataCriacao()).dataAtualizacao(pessoa.getDataAtualizacao()).build();
@@ -56,6 +57,7 @@ public class PessoaMapper {
         .uuid(dto.getUuid())
         .nome(dto.getNome())
         .cpf(dto.getCpf())
+        .email(dto.getEmail())
         .sexo(dto.getSexo().equals("M") ? Sexo.MASCULINO : Sexo.FEMININO)
         .enderecos(enderecoMapper.deserialize(dto.getEnderecos()))
         .dataCriacao(dto.getDataCriacao()).dataAtualizacao(dto.getDataAtualizacao()).build();
