@@ -8,10 +8,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PessoaMapper {
+
+  private EnderecoMapper enderecoMapper;
+
+  @Autowired
+  public PessoaMapper(EnderecoMapper enderecoMapper) {
+    this.enderecoMapper = enderecoMapper;
+  }
 
   public PessoaDto serialize(final Pessoa pessoa) {
     if (Optional.ofNullable(pessoa).isEmpty()) {
@@ -24,6 +32,7 @@ public class PessoaMapper {
         .nome(pessoa.getNome())
         .cpf(pessoa.getCpf())
         .sexo(pessoa.getSexo().getValor())
+        .enderecos(enderecoMapper.serialize(pessoa.getEnderecos()))
         .dataCriacao(pessoa.getDataCriacao()).dataAtualizacao(pessoa.getDataAtualizacao()).build();
   }
 
@@ -48,6 +57,7 @@ public class PessoaMapper {
         .nome(dto.getNome())
         .cpf(dto.getCpf())
         .sexo(dto.getSexo().equals("M") ? Sexo.MASCULINO : Sexo.FEMININO)
+        .enderecos(enderecoMapper.deserialize(dto.getEnderecos()))
         .dataCriacao(dto.getDataCriacao()).dataAtualizacao(dto.getDataAtualizacao()).build();
   }
 

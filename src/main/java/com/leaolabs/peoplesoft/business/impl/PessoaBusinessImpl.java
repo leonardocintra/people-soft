@@ -1,9 +1,11 @@
 package com.leaolabs.peoplesoft.business.impl;
 
+import com.leaolabs.peoplesoft.business.EnderecoBusiness;
 import com.leaolabs.peoplesoft.business.PessoaBusiness;
 import com.leaolabs.peoplesoft.commons.exception.EntityAlreadyExistsException;
 import com.leaolabs.peoplesoft.model.Pessoa;
 import com.leaolabs.peoplesoft.repository.PessoaRepository;
+import com.leaolabs.peoplesoft.v1.mapper.EnderecoMapper;
 
 import java.util.Optional;
 
@@ -14,10 +16,16 @@ import org.springframework.stereotype.Service;
 public class PessoaBusinessImpl implements PessoaBusiness {
 
   private PessoaRepository pessoaRepository;
+  private EnderecoBusiness enderecoBusiness;
+  private EnderecoMapper enderecoMapper;
 
   @Autowired
-  public PessoaBusinessImpl(final PessoaRepository pessoaRepository) {
+  public PessoaBusinessImpl(final PessoaRepository pessoaRepository,
+                            final EnderecoBusiness enderecoBusiness,
+                            final EnderecoMapper enderecoMapper) {
     this.pessoaRepository = pessoaRepository;
+    this.enderecoBusiness = enderecoBusiness;
+    this.enderecoMapper = enderecoMapper;
   }
 
   @Override
@@ -31,6 +39,16 @@ public class PessoaBusinessImpl implements PessoaBusiness {
       throw new EntityAlreadyExistsException("CPF");
     });
 
-    return Optional.of(this.pessoaRepository.save(pessoa));
+    var optionalPessoa = Optional.of(this.pessoaRepository.save(pessoa));
+
+    Optional.ofNullable(pessoa.getEnderecos())
+        .filter(enderecos -> !enderecos.isEmpty())
+        .ifPresent(enderecos -> {
+          final var enderecoDtos = enderecoMapper.serialize(enderecos);
+          final var enderecosSalvos = enderecoBusiness.create(optionalPessoa.get().getId(), enderecoDtos);
+          optionalPessoa.get().setEnderecos(enderecosSalvos);
+        });
+
+    return optionalPessoa;
   }
 }

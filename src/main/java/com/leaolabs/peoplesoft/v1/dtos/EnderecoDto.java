@@ -2,7 +2,6 @@ package com.leaolabs.peoplesoft.v1.dtos;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PessoaDto implements Serializable {
+public class EnderecoDto implements Serializable {
 
   private Long id;
 
@@ -25,16 +24,32 @@ public class PessoaDto implements Serializable {
 
   @NotBlank
   @Size(max = 100)
-  private String nome;
+  private String endereco;
 
   @NotBlank
-  @Size(max = 11)
-  private String cpf;
+  @Size(max = 100)
+  private String bairro;
 
-  @Size(max = 1)
-  private String sexo;
+  @NotBlank
+  @Size(max = 100)
+  private String cidade;
 
-  private List<EnderecoDto> enderecos;
+  @Size(max = 10)
+  private String numero;
+
+  @NotBlank
+  @Size(max = 2)
+  private String uf;
+
+  @NotBlank
+  @Size(max = 8)
+  private String cep;
+
+  @Size(max = 100)
+  private String complemento;
+
+  @Size(max = 300)
+  private String referencia;
 
   @NotBlank
   private ZonedDateTime dataCriacao;

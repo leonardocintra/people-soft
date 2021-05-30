@@ -1,18 +1,18 @@
 package com.leaolabs.peoplesoft.model;
 
-import com.leaolabs.peoplesoft.enums.EstadoCivil;
-import com.leaolabs.peoplesoft.enums.Sexo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.leaolabs.peoplesoft.enums.TipoTelefone;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -22,6 +22,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 @Getter
@@ -30,8 +32,8 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "pessoa")
-public class Pessoa {
+@Table(name = "telefone")
+public class Telefone {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,27 +43,22 @@ public class Pessoa {
   @Column(nullable = false)
   private UUID uuid;
 
-  private String nome;
+  private String area;
 
-  private String cpf;
+  private String telefone;
 
-  @Column(name = "data_nascimento")
-  private Date dataNascimento;
+  private TipoTelefone tipo;
 
-  private Sexo sexo;
-
-  @Column(name = "estado_civil")
-  private EstadoCivil estadoCivil;
+  @JsonIgnore
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "pessoa_id")
+  private Pessoa pessoa;
 
   @Column(name = "data_criacao")
   private ZonedDateTime dataCriacao;
 
   @Column(name = "data_atualizacao")
   private ZonedDateTime dataAtualizacao;
-
-  @OneToMany(mappedBy = "pessoa")
-  private List<Endereco> enderecos;
-
 
   @PrePersist
   protected void prePersist() {
