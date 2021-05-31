@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/peoplesoft")
+@RequestMapping("/v1/peoplesoft/pessoa")
 public class PessoaController extends BaseController {
 
   private final PessoaMapper pessoaMapper;
