@@ -30,8 +30,13 @@ public class PessoaBusinessImpl implements PessoaBusiness {
   }
 
   @Override
-  public Optional<Pessoa> getByCpf(String cpf) {
+  public Optional<Pessoa> getByCpf(final String cpf) {
     return this.pessoaRepository.findByCpf(cpf);
+  }
+
+  @Override
+  public Optional<Pessoa> getById(final Long id) {
+    return this.pessoaRepository.findById(id);
   }
 
   @Override

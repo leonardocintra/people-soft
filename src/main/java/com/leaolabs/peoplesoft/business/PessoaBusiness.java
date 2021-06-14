@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface PessoaBusiness {
   Optional<Pessoa> getByCpf(String cpf);
 
+  Optional<Pessoa> getById(Long id);
+
   Optional<Pessoa> create(Pessoa pessoa);
 }

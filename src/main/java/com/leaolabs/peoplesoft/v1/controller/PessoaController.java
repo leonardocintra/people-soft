@@ -39,10 +39,20 @@ public class PessoaController extends BaseController {
   }
 
   @CrossOrigin(origins = "*", allowedHeaders = "*")
-  @GetMapping(value = "/{cpf}")
+  @GetMapping(value = "/cpf/{cpf}")
   @ResponseBody
   public ResponseEntity<ResponseMeta> getPessoaByCPF(@PathVariable final String cpf) {
     var pessoa = this.pessoaBusiness.getByCpf(cpf)
+        .orElseThrow(() -> new EntityNotFoundException("Pessoa"));
+
+    return super.buildResponse(HttpStatus.OK, Optional.of(this.pessoaMapper.serialize(pessoa)));
+  }
+
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
+  @GetMapping(value = "/{id}")
+  @ResponseBody
+  public ResponseEntity<ResponseMeta> getPessoaById(@PathVariable final Long id) {
+    var pessoa = this.pessoaBusiness.getById(id)
         .orElseThrow(() -> new EntityNotFoundException("Pessoa"));
 
     return super.buildResponse(HttpStatus.OK, Optional.of(this.pessoaMapper.serialize(pessoa)));
