@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EnderecoBusiness {
-  List<Endereco> create(Long pessoaId, List<EnderecoDto> enderecoDtos);
+  List<Endereco> create(Long pessoaId, List<Endereco> enderecoDtos);
 }

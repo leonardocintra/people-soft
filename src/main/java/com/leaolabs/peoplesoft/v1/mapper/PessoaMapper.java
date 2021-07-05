@@ -15,10 +15,12 @@ import org.springframework.stereotype.Component;
 public class PessoaMapper {
 
   private EnderecoMapper enderecoMapper;
+  private TelefoneMapper telefoneMapper;
 
   @Autowired
-  public PessoaMapper(EnderecoMapper enderecoMapper) {
+  public PessoaMapper(EnderecoMapper enderecoMapper, TelefoneMapper telefoneMapper) {
     this.enderecoMapper = enderecoMapper;
+    this.telefoneMapper = telefoneMapper;
   }
 
   public PessoaDto serialize(final Pessoa pessoa) {
@@ -34,6 +36,7 @@ public class PessoaMapper {
         .email(pessoa.getEmail())
         .sexo(pessoa.getSexo().getValor())
         .enderecos(enderecoMapper.serialize(pessoa.getEnderecos()))
+        .telefones(telefoneMapper.serialize(pessoa.getTelefones()))
         .dataCriacao(pessoa.getDataCriacao()).dataAtualizacao(pessoa.getDataAtualizacao()).build();
   }
 
@@ -60,6 +63,7 @@ public class PessoaMapper {
         .email(dto.getEmail())
         .sexo(dto.getSexo().equals("M") ? Sexo.MASCULINO : Sexo.FEMININO)
         .enderecos(enderecoMapper.deserialize(dto.getEnderecos()))
+        .telefones(telefoneMapper.deserialize(dto.getTelefones()))
         .dataCriacao(dto.getDataCriacao()).dataAtualizacao(dto.getDataAtualizacao()).build();
   }
 

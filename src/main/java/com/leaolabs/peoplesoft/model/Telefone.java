@@ -1,7 +1,6 @@
 package com.leaolabs.peoplesoft.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.leaolabs.peoplesoft.enums.TipoTelefone;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -12,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -22,8 +20,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 @Getter
@@ -45,9 +41,9 @@ public class Telefone {
 
   private String area;
 
-  private String telefone;
+  private String numero;
 
-  private TipoTelefone tipo;
+  private String tipo;
 
   @JsonIgnore
   @ManyToOne(optional = false)

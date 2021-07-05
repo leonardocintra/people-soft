@@ -64,6 +64,9 @@ public class Pessoa {
   @OneToMany(mappedBy = "pessoa")
   private List<Endereco> enderecos;
 
+  @OneToMany(mappedBy = "pessoa")
+  private List<Telefone> telefones;
+
 
   @PrePersist
   protected void prePersist() {

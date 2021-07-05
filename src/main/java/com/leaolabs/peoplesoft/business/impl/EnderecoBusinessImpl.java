@@ -29,13 +29,11 @@ public class EnderecoBusinessImpl implements EnderecoBusiness {
   }
 
   @Override
-  public List<Endereco> create(Long pessoaId, List<EnderecoDto> enderecoDtos) {
+  public List<Endereco> create(Long pessoaId, List<Endereco> enderecos) {
     final var pessoa = pessoaRepository.findById(pessoaId).orElseThrow(() -> new EntityNotFoundException("Pessoa"));
 
-    final var enderecosToSave = this.enderecoMapper.deserialize(enderecoDtos);
+    enderecos.forEach(endereco -> endereco.setPessoa(pessoa));
 
-    enderecosToSave.forEach(endereco -> endereco.setPessoa(pessoa));
-
-    return this.enderecoRepository.saveAll(enderecosToSave);
+    return this.enderecoRepository.saveAll(enderecos);
   }
 }
