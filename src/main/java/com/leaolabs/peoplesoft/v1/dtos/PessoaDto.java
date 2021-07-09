@@ -29,6 +29,9 @@ public class PessoaDto implements Serializable {
   @NotBlank
   @Size(max = 100)
   private String nome;
+  
+  @Size(max = 100)
+  private String sobrenome;
 
   @NotBlank
   @Size(max = 11)

@@ -43,6 +43,8 @@ public class Pessoa {
 
   private String nome;
 
+  private String sobrenome;
+
   private String cpf;
 
   @Column(name = "data_nascimento")
